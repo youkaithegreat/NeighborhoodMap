@@ -1,9 +1,9 @@
 /**
  * Created by Kevin on 2/7/2016.
  */
-
+var map;
 //code taken from google maps API site
-function initMap() {
+var initMap = function (){
 
     //Green!
     var styleArray = [
@@ -25,7 +25,7 @@ function initMap() {
     ];
 
     // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 25.0478963, lng: 121.516565},
         //coordinated are for taipei main station in Taiwan
         scrollwheel: true,
@@ -33,7 +33,46 @@ function initMap() {
         styles: styleArray,
         zoom: 15
     });
+
+
+
+
+
+};
+
+function addMarker(location, label, name, review, link, map) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>'+
+        '<div id="bodyContent"><p>' + review + '</p><p>Attribution: <a href=' + link + '/>' + link + '</a></div>'+
+        '</div>';
+
+
+    var marker = new google.maps.Marker({
+        position: location,
+        label: "" + label,
+        map: map,
+        animation: google.maps.Animation.DROP
+    });
+    console.log("does this run");
+
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+
 }
+// Adds a marker to the map.
+
+
+
 /* code provided from
 https://github.com/levbrie/mighty_marks/blob/master/yelp-search-sample.html
 
@@ -56,6 +95,7 @@ var terms = 'coffee';
 var near = 'Taipei Main Station';
 var best = '2';
 var amount = '10';
+var radius = '1000';
 
 var accessor = {
     consumerSecret : auth.consumerSecret,
@@ -66,6 +106,7 @@ parameters.push(['term', terms]);
 parameters.push(['location', near]);
 parameters.push(['sort', best]);
 parameters.push(['limit', amount]);
+parameters.push(['radius_filter', radius]);
 parameters.push(['callback', 'cb']);
 parameters.push(['oauth_consumer_key', auth.consumerKey]);
 parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
@@ -90,6 +131,12 @@ $.ajax({
     'dataType' : 'jsonp',
     'jsonpCallback' : 'cb',
     'success' : function(data) {
+        for(var i = 0; i < data.businesses.length; i++){
+
+            addMarker({lat: data.businesses[i].location.coordinate.latitude, lng: data.businesses[i].location.coordinate.longitude},  i+1, data.businesses[i].name, data.businesses[i].snippet_text, data.businesses[i].url,map);
+        }
+        console.log(data.businesses[0].location.coordinate.latitude);
+        console.log(data.businesses[0].location.coordinate.longitude);
         console.log(data);
         console.log(message.action);
     }
