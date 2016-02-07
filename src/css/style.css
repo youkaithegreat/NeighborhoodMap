@@ -5,13 +5,26 @@ html, body { height: 100%; margin: 0; padding: 0; }
     position: absolute;
 
     top: 0;
-    right:0;
+    right: 5%;
     width: 20%;
     height: 90%;
     z-index: 10;
-    background-color: rgba(0,0,0,0.5); /*dim the background*/
+    background-color:white;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-#right {
-    float: right;
+
+li {
+    width: 80%;
+    height: 20%;
+    border-color:black;
+    border-width:1px;
+    border-style: solid;
+    margin-top:5%;
+
+}
+
+li::selection {
+    background-color: lightblue;
 }
