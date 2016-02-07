@@ -58,7 +58,6 @@ function addMarker(location, label, name, review, link, map) {
         map: map,
         animation: google.maps.Animation.DROP
     });
-    console.log("does this run");
 
     marker.addListener('click', function() {
         infowindow.open(map, marker);
@@ -124,20 +123,75 @@ var parameterMap = OAuth.getParameterMap(message.parameters);
 parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature);
 console.log(parameterMap);
 
-$.ajax({
-    'url' : message.action,
-    'data' : parameterMap,
-    'cache' : true,
-    'dataType' : 'jsonp',
-    'jsonpCallback' : 'cb',
-    'success' : function(data) {
-        for(var i = 0; i < data.businesses.length; i++){
 
-            addMarker({lat: data.businesses[i].location.coordinate.latitude, lng: data.businesses[i].location.coordinate.longitude},  i+1, data.businesses[i].name, data.businesses[i].snippet_text, data.businesses[i].url,map);
+    $.ajax({
+        'url' : message.action,
+        'data' : parameterMap,
+        'cache' : true,
+        'dataType' : 'jsonp',
+        'jsonpCallback' : 'cb',
+        'success' : function(data) {
+            var info ={};
+            for(var i = 0; i < data.businesses.length; i++){
+
+                addMarker({lat: data.businesses[i].location.coordinate.latitude, lng: data.businesses[i].location.coordinate.longitude},  i+1, data.businesses[i].name, data.businesses[i].snippet_text, data.businesses[i].url,map);
+
+                info.id = i;
+                info.name = data.businesses[i].name;
+                info.lat = data.businesses[i].location.coordinate.longitude;
+                coffeeShops.push({id: ko.observable(i), name : info.name, lat: info.lat});
+               // console.log(info);
+                console.log(ko.toJSON(coffeeShops));
+                //console.log(viewModel.coffeeShops.info[0].name);
+
+            }
+
         }
-        console.log(data.businesses[0].location.coordinate.latitude);
-        console.log(data.businesses[0].location.coordinate.longitude);
-        console.log(data);
-        console.log(message.action);
-    }
+
+
+    });
+
+
+
+var coffeeShops = ko.observableArray();
+var backup =[];
+
+$(document).ready(function(){
+
+    var view = {
+        self: this,
+        data: ko.observableArray(),
+       properties: coffeeShops,
+        query: ko.observable(''),
+
+        search: function(value) {
+
+            // remove all the current beers, which removes them from the view
+
+            console.log(ko.toJSON(view.properties));
+             backup = coffeeShops.slice(0);
+
+
+            console.log(ko.toJSON(backup));
+            console.log(ko.toJSON(coffeeShops));
+            view.properties.removeAll();
+
+            for(var i = 0; i < backup.length; i++){
+                if(backup[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                    var thing = backup[i];
+                    view.properties.push(thing);
+                }
+            }
+
+            console.log(ko.toJSON(backup));
+            coffeeShops = backup.splice(0);
+
+        }
+
+    };
+
+    ko.applyBindings(view);
+    view.query.subscribe(view.search);
 });
+
+
