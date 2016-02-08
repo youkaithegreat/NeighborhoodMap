@@ -40,30 +40,35 @@ var initMap = function (){
 
 };
 
-function addMarker(location, label, name, review, link, map) {
+//global variable, to allow window closure for
+
+var infowindow;
+
+function addMarker(location, name, review, link, id, map) {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
 
-    var contentString = '<div id="content">'+
+
+    var contentString = '<div id=id>'+
         '<div id="siteNotice">'+
         '</div>'+
         '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>'+
-        '<div id="bodyContent"><p>' + review + '</p><p>Attribution: <a href=' + link + '/>' + link + '</a></div>'+
+        '<div id="bodyContent"><p>' + review + '</p><p><a href=' + link + '/> Click for more info on Yelp! </a></div>'+
         '</div>';
 
 
     var marker = new google.maps.Marker({
         position: location,
-        label: "" + label,
         map: map,
         animation: google.maps.Animation.DROP
     });
 
     marker.addListener('click', function() {
+        infowindow.setContent(contentString);
         infowindow.open(map, marker);
     });
 
-    var infowindow = new google.maps.InfoWindow({
+   infowindow = new google.maps.InfoWindow({
         content: contentString
     });
 
@@ -131,10 +136,23 @@ console.log(parameterMap);
         'dataType' : 'jsonp',
         'jsonpCallback' : 'cb',
         'success' : function(data) {
+            console.log(data);
             var info ={};
             for(var i = 0; i < data.businesses.length; i++){
 
-                addMarker({lat: data.businesses[i].location.coordinate.latitude, lng: data.businesses[i].location.coordinate.longitude},  i+1, data.businesses[i].name, data.businesses[i].snippet_text, data.businesses[i].url,map);
+                this.location = {lat: data.businesses[i].location.coordinate.latitude, lng: data.businesses[i].location.coordinate.longitude};
+                this.name = data.businesses[i].name;
+
+                    if(data.businesses[i].snippet_text== undefined) {
+                        this.snippet_text =  "No info found!";
+                    }else
+                    {
+                        this.snippet_text = data.businesses[i].snippet_text;
+                    }
+
+                this.url = data.businesses[i].url;
+
+                addMarker(this.location, this.name, this.snippet_text, this.url, i, map);
 
                 info.id = i;
                 info.name = data.businesses[i].name;
@@ -158,28 +176,30 @@ var backup =[];
 
 $(document).ready(function(){
 
-    var view = {
+    var viewModel = {
         self: this,
         data: ko.observableArray(),
        properties: coffeeShops,
         query: ko.observable(''),
 
+
+        //SUPER IMPORTANT **, must store things in back up TWICE. once at the beginning and at the end. TO KEEP THE ARRAY FROM DESTRUCTING
         search: function(value) {
 
             // remove all the current beers, which removes them from the view
 
-            console.log(ko.toJSON(view.properties));
+            console.log(ko.toJSON(viewModel.properties));
              backup = coffeeShops.slice(0);
 
 
             console.log(ko.toJSON(backup));
             console.log(ko.toJSON(coffeeShops));
-            view.properties.removeAll();
+            viewModel.properties.removeAll();
 
             for(var i = 0; i < backup.length; i++){
                 if(backup[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
                     var thing = backup[i];
-                    view.properties.push(thing);
+                    viewModel.properties.push(thing);
                 }
             }
 
@@ -190,8 +210,8 @@ $(document).ready(function(){
 
     };
 
-    ko.applyBindings(view);
-    view.query.subscribe(view.search);
+    ko.applyBindings(viewModel);
+    viewModel.query.subscribe(viewModel.search);
 });
 
 
