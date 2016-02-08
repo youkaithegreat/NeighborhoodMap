@@ -43,14 +43,14 @@ var initMap = function (){
 //global variable, to allow window closure for
 
 var infowindow;
+var markerList = [];
 
 function addMarker(location, name, review, link, id, map) {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
 
 
-    var contentString = '<div id=id>'+
-        '<div id="siteNotice">'+
+    var contentString = '<div id="content"><div id="siteNotice">'+
         '</div>'+
         '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>'+
         '<div id="bodyContent"><p>' + review + '</p><p><a href=' + link + '/> Click for more info on Yelp! </a></div>'+
@@ -60,7 +60,8 @@ function addMarker(location, name, review, link, id, map) {
     var marker = new google.maps.Marker({
         position: location,
         map: map,
-        animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
+        content: contentString
     });
 
     marker.addListener('click', function() {
@@ -72,9 +73,14 @@ function addMarker(location, name, review, link, id, map) {
         content: contentString
     });
 
+    markerList.push(marker);
 }
 // Adds a marker to the map.
 
+function openWindows(id){
+    infowindow.setContent(markerList[id].content);
+    infowindow.open(map, markerList[id]);
+}
 
 
 /* code provided from
