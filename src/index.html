@@ -4,6 +4,8 @@
 <head>
     <link href="css/style.css" rel="stylesheet" type="text/css">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
@@ -21,9 +23,10 @@
 <div id="map">
 
 </div>
-<div class="overlay">
 
+<div>
 
+<div id="container" class="overlay">
 
             <form>
                   <input id="search" type="search" name="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
@@ -34,7 +37,7 @@
 
                     <!-- ko foreach: properties -->
                 <li>
-                    <span data-bind="text: name"></span>
+                    <span data-bind="attr: { id: id }, text: name" onclick="openWindows(this.id)" ></span>
 
                 </li>
                     <!-- /ko -->
@@ -44,7 +47,7 @@
         </div>
 
 </div>
-
+</div>
 <!-- Embeds map !-->
 
 </body>

@@ -205,7 +205,12 @@ $(document).ready(function(){
             for(var i = 0; i < backup.length; i++){
                 if(backup[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
                     var thing = backup[i];
+
                     viewModel.properties.push(thing);
+                    markerList[i].setVisible(true);
+                }else
+                {
+                    markerList[i].setVisible(false);
                 }
             }
 
