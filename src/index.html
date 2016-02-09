@@ -46,7 +46,9 @@
 
                     <!-- ko foreach: properties -->
                 <li class ="shops" data-bind="attr: {id: id}" onclick="openWindows(this.id)">
-                    <span data-bind="text: name"></span>
+                    <h4 data-bind="text: name"></h4>
+                    <p data-bind="text: snippet"></p>
+
 
                 </li>
                     <!-- /ko -->

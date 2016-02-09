@@ -9,7 +9,7 @@ html, body { position:relative; height: 100%; margin: 0; padding: 0; }
         right:0 !important;
         width: 10% !important;
         height: 100% !important;
-        background-color:darkgreen;
+        background-color:darkgrey;
         overflow-y: scroll;
         overflow-x: hidden;
     }
@@ -20,7 +20,7 @@ html, body { position:relative; height: 100%; margin: 0; padding: 0; }
         right:0 !important;
         width: 50% !important;
         height: 100% !important;
-        background-color:darkgreen;
+        background-color:darkgrey;
         overflow-y: scroll;
         overflow-x: hidden;
         opacity: .8;
@@ -32,7 +32,7 @@ html, body { position:relative; height: 100%; margin: 0; padding: 0; }
         right:0 !important;
         width: 10% !important;
         height: 100% !important;
-        background-color:darkgreen;
+        background-color:darkgrey;
         overflow-y: scroll;
         overflow-x: hidden;
     }
@@ -43,14 +43,16 @@ html, body { position:relative; height: 100%; margin: 0; padding: 0; }
     height: 100%;
 }
 
-
+p {
+    font-size:.8em;
+}
 form {
     position: absolute;
     top:0;
     right:40%;
     width:20%;
     padding:8px 15px;
-    background:darkgreen;
+    background:darkgrey;
     border:0 solid #dbdbdb;
     opacity: .8;
 
@@ -67,7 +69,7 @@ form {
     width: 20%;
     height: 70%;
     z-index: 10;
-    background-color:darkgreen;
+    background-color:darkgrey;
     overflow-y: auto;
     overflow-x: hidden;
     opacity: .8;
@@ -79,10 +81,10 @@ table {
 
 .shops{
 
-    border-color: darkgreen;
+    border-color: black;
     border-bottom-style: dashed;
     border-width: 1px;
-    background-color: lightgreen;
+    background-color: darkgrey;
     list-style-type: none;
     align-content: center;
     left: 0;
@@ -91,7 +93,7 @@ table {
 }
 
 #title {
-    background-color: darkolivegreen;
+    background-color:grey;
     font-size: 2em;
     text-align: center;
     font-style: oblique;
@@ -99,8 +101,9 @@ table {
 
 
 li.shops:focus, li.shops:hover {
-    background-color: green;
+    background-color: black;
     font-style: oblique;
+    color: white;
 }
 
 
@@ -112,6 +115,6 @@ ul {
 
 #search {
     width: 85%;
-    background:lightgreen;
+    background:darkgrey;
     border:0px solid #dbdbdb;
 }
