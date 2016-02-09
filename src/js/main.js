@@ -148,7 +148,8 @@ parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
 parameters.push(['oauth_token', auth.accessToken]);
 parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
 var message = {
-    'action': 'http://api.yelp.com/v2/search',
+    'action':'http://api.yelp.com/v2/search',
+    //correct 'action': 'http://api.yelp.com/v2/search',
     'method': 'GET',
     'parameters': parameters
 };
@@ -160,7 +161,11 @@ parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
 console.log(parameterMap);
 
 
-$.ajax({
+var yelpRequestTimeout = setTimeout(function(){
+    $('#listTitle').text("Failed to get Yelp Info! Sorry! :(");
+}, 8000);
+
+var getYelp = $.ajax({
     'url': message.action,
     'data': parameterMap,
     'cache': true,
@@ -192,12 +197,11 @@ $.ajax({
             // console.log(info);
             console.log(ko.toJSON(coffeeShops));
             //console.log(viewModel.coffeeShops.info[0].name);
-
+            clearTimeout(yelpRequestTimeout);
         }
 
+
     }
-
-
 });
 
 

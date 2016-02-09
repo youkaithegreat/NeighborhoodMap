@@ -10,14 +10,14 @@
 
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvWfDLwakXyWeSeiFo6g4rnHhqFQP1fsI&callback=initMap">
-    </script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <script src="js/knockout-3.4.0.js" type="text/javascript"></script>
     <script src ="js/main.js" type="text/javascript"></script>
-    <script src ="js/view.js" type ="text/javascript"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvWfDLwakXyWeSeiFo6g4rnHhqFQP1fsI&callback=initMap">
+    </script>
+
 
 
 </head>
@@ -41,7 +41,7 @@
 
             <ul>
                 <li id = "title">
-                    <span>Coffee Shop List!</span>
+                    <span id ="listTitle">Coffee Shop List!</span>
                 </li>
 
                     <!-- ko foreach: properties -->
