@@ -1,40 +1,46 @@
-html, body { position:relative; height: 100%; margin: 0; padding: 0; }
-#map { height: 100%; }
+html,
+body {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#map {
+    height: 100%;
+}
 
+@media only screen and (min-device-width: 320px) and (max-device-width: 640px) {
+    /* for mobile the list displays at the bottom of the page */
 
-@media only screen and (min-device-width:320px) and (max-device-width: 640px){
-    .overlay{
+    #container {
         display: block;
         position: absolute;
-        right:0 !important;
-        width: 10% !important;
-        height: 100% !important;
-        background-color:darkgrey;
+        top: 80% !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 20% !important;
+        background-color: darkgrey;
         overflow-y: scroll;
         overflow-x: hidden;
     }
-
-    .overlay:focus, .overlay:hover {
+    #container:active,
+    #container:focus,
+    #container:hover {
         display: block;
         position: absolute;
-        right:0 !important;
-        width: 50% !important;
-        height: 100% !important;
-        background-color:darkgrey;
+        top: 50% !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 50% !important;
+        background-color: darkgrey;
         overflow-y: scroll;
         overflow-x: hidden;
-        opacity: .8;
     }
-
-    .overlay:not(:focus) {
-        display: block;
+    form {
         position: absolute;
-        right:0 !important;
-        width: 10% !important;
-        height: 100% !important;
-        background-color:darkgrey;
-        overflow-y: scroll;
-        overflow-x: hidden;
+        width: 80% !important;
+        right: 5% !important;
     }
 }
 
@@ -42,45 +48,36 @@ html, body { position:relative; height: 100%; margin: 0; padding: 0; }
     width: 100%;
     height: 100%;
 }
-
 p {
-    font-size:.8em;
+    font-size: .8em;
 }
 form {
     position: absolute;
-    top:0;
-    right:40%;
-    width:20%;
-    padding:8px 15px;
-    background:darkgrey;
-    border:0 solid #dbdbdb;
+    top: 0;
+    right: 40%;
+    width: 20%;
+    padding: 8px 15px;
+    background: darkgrey;
+    border: 0 solid #dbdbdb;
     opacity: .8;
-
-    margin:50px auto;
+    margin: 50px auto;
 }
-
-
 #container {
-
     position: absolute;
-
     top: 10%;
     right: 5%;
     width: 20%;
     height: 70%;
     z-index: 10;
-    background-color:darkgrey;
+    background-color: darkgrey;
     overflow-y: auto;
     overflow-x: hidden;
     opacity: .8;
 }
-
 table {
     width: 100%;
 }
-
-.shops{
-
+.shops {
     border-color: black;
     border-bottom-style: dashed;
     border-width: 1px;
@@ -88,33 +85,31 @@ table {
     list-style-type: none;
     align-content: center;
     left: 0;
-    font-family: "Bodoni MT";
-    margin: 0; padding: 0;
+    font-family: "Bodoni MT", serif;
+    margin: 0;
+    padding: 0;
 }
-
 #title {
-    background-color:grey;
+    background-color: grey;
     font-size: 2em;
     text-align: center;
     font-style: oblique;
 }
-
-
-li.shops:focus, li.shops:hover {
+li.shops:focus,
+li.shops:hover {
     background-color: black;
     font-style: oblique;
     color: white;
 }
-
-
 ul {
-    margin: 0; padding: 0; align-content: left; width: 100%;}
-
-
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
 /*  taken from form site*/
 
 #search {
     width: 85%;
-    background:darkgrey;
-    border:0px solid #dbdbdb;
+    background: darkgrey;
+    border: 0 solid #dbdbdb;
 }
