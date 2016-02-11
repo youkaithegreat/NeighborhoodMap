@@ -23,6 +23,9 @@
             <input id="search" type="search" name="search" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
         </form>
     </div>
+    <div id="errorMessage" data-bind="visible: errorMessage">
+    <h1>Something went horribly wrong! Yelp API request failed. Run!</h1>
+    </div>
     <div id="container" class="overlay">
         <ul>
             <li id = "title">

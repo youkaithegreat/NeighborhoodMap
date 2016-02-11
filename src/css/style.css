@@ -114,3 +114,14 @@ ul {
     background: darkgrey;
     border: 0 solid #dbdbdb;
 }
+
+#errorMessage {
+    position: absolute;
+    top: 30%;
+    right: 10%;
+    width: 70%;
+    height: 40%;
+    z-index: 10;
+    background-color: darkgrey;
+    opacity: .8;
+}

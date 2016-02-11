@@ -281,69 +281,73 @@ var Authenticate = function() {
 
     //simple setTimeout to check if the request comes back properly or not from YELP API
     var yelpRequestTimeout = setTimeout(function() {
-        $('#listTitle').text("Failed to get Yelp Info! Sorry! :(");
+        viewModel.errorMessage(true);
+        console.log(true);
     }, 5000);
 };
 
 
+var viewModel = {
+    self: this,
+    data: ko.observableArray(),
+    properties: coffeeShops,
+    query: ko.observable(''),
+    errorMessage: ko.observable(false),
+    //SUPER IMPORTANT **, must store things in back up TWICE. once at the beginning and at the end. TO KEEP THE ARRAY FROM DESTRUCTING\
+    //live search implementation from list view.
+    search: function(value) {
+
+        //used to check where my array was going!
+        console.log(ko.toJSON(viewModel.properties));
+
+        //makes a backup copy of info stored from AJAX request
+        backup = coffeeShops.slice(0);
+
+        //some more error checking. Make sure both of the arrays still exist.
+        console.log(ko.toJSON(backup));
+        console.log(ko.toJSON(coffeeShops));
+
+        //super destructive removeAll. Completely clears memory of any array linked to that information.
+        //You need th beackup, because of this.
+        viewModel.properties.removeAll();
+
+        //simple live search implementation
+        //clears markers as well as list
+        for (var i = 0; i < backup.length; i++) {
+            if (backup[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+                var thing = backup[i];
+
+                viewModel.properties.push(thing);
+                markerList[i].setVisible(true);
+            } else {
+                markerList[i].setVisible(false);
+            }
+        }
+
+        console.log(ko.toJSON(backup));
+        coffeeShops = backup.splice(0);
+
+    },
+    //refactored code. uses click to animate and link lists together. 
+    openWindows: function(data, event) {
+        var self = this;
+        this.id = event.currentTarget.id;
+        console.log(self.id);
+        infowindow.setContent(markerList[this.id].content);
+        infowindow.open(map, markerList[this.id]);
+
+        markerList[this.id].setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+            markerList[self.id].setAnimation(null);
+        }, 3000);
+    }
+
+};
 
 
 //viewModel that updates the screen markers as well as list view.
 $(document).ready(function() {
 
-    var viewModel = {
-        self: this,
-        data: ko.observableArray(),
-        properties: coffeeShops,
-        query: ko.observable(''),
-        //SUPER IMPORTANT **, must store things in back up TWICE. once at the beginning and at the end. TO KEEP THE ARRAY FROM DESTRUCTING\
-        //live search implementation from list view.
-        search: function(value) {
-
-            //used to check where my array was going!
-            console.log(ko.toJSON(viewModel.properties));
-
-            //makes a backup copy of info stored from AJAX request
-            backup = coffeeShops.slice(0);
-
-            //some more error checking. Make sure both of the arrays still exist.
-            console.log(ko.toJSON(backup));
-            console.log(ko.toJSON(coffeeShops));
-
-            //super destructive removeAll. Completely clears memory of any array linked to that information.
-            //You need th beackup, because of this.
-            viewModel.properties.removeAll();
-
-            //simple live search implementation
-            //clears markers as well as list
-            for (var i = 0; i < backup.length; i++) {
-                if (backup[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-                    var thing = backup[i];
-
-                    viewModel.properties.push(thing);
-                    markerList[i].setVisible(true);
-                } else {
-                    markerList[i].setVisible(false);
-                }
-            }
-
-            console.log(ko.toJSON(backup));
-            coffeeShops = backup.splice(0);
-
-        },
-        openWindows: function(data, event) {
-
-            id = event.currentTarget.id;
-            console.log(id);
-            infowindow.setContent(markerList[id].content);
-            infowindow.open(map, markerList[id]);
-            markerList[id].setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function() {
-                markerList[id].setAnimation(null);
-            }, 3000);
-        }
-
-    };
 
     ko.applyBindings(viewModel);
     viewModel.query.subscribe(viewModel.search);
