@@ -16,10 +16,10 @@ body {
     #container {
         display: block;
         position: absolute;
-        top: 80% !important;
+        top: 90% !important;
         right: 0 !important;
         width: 100% !important;
-        height: 20% !important;
+        height: 10% !important;
         background-color: darkgrey;
         overflow-y: scroll;
         overflow-x: hidden;

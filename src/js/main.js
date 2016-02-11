@@ -109,6 +109,13 @@ var initMap = function() {
             lat: 25.0478963,
             lng: 121.516565
         },
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+        },streetViewControl: true,
+        streetViewControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP
+        },
         //coordinated are for taipei main station in Taiwan
         scrollwheel: true,
         // Apply the map style array to the map.
