@@ -29,7 +29,7 @@
                 <span id ="listTitle">Coffee Shop List!</span>
             </li>
             <!-- ko foreach: properties -->
-            <li class ="shops" data-bind="attr: {id: id}" onclick="openWindows(this.id)">
+            <li class="shops" data-bind="attr: {id: id}, click: $parent.openWindows">
                 <h4 data-bind="text: name"></h4>
                 <p data-bind="text: snippet"></p>
             </li>

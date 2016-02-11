@@ -296,7 +296,6 @@ $(document).ready(function() {
         data: ko.observableArray(),
         properties: coffeeShops,
         query: ko.observable(''),
-
         //SUPER IMPORTANT **, must store things in back up TWICE. once at the beginning and at the end. TO KEEP THE ARRAY FROM DESTRUCTING\
         //live search implementation from list view.
         search: function(value) {
@@ -331,6 +330,17 @@ $(document).ready(function() {
             console.log(ko.toJSON(backup));
             coffeeShops = backup.splice(0);
 
+        },
+        openWindows: function(data, event) {
+
+            id = event.currentTarget.id;
+            console.log(id);
+            infowindow.setContent(markerList[id].content);
+            infowindow.open(map, markerList[id]);
+            markerList[id].setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function() {
+                markerList[id].setAnimation(null);
+            }, 3000);
         }
 
     };

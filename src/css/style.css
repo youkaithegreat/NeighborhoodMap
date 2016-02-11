@@ -88,6 +88,7 @@ table {
     font-family: "Bodoni MT", serif;
     margin: 0;
     padding: 0;
+    position: relative;
 }
 #title {
     background-color: grey;
