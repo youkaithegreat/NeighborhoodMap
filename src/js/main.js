@@ -126,9 +126,15 @@ var initMap = function() {
 
 };
 
+var googleError = function(){
+  alert("There was a problem with Google and we can't load the map!");
+};
+
 //global variables, to allow window closure
 var infowindow;
 var markerList = [];
+var coffeeShops = ko.observableArray();
+var backup = [];
 
 function addMarker(location, name, review, link, id, map) {
     // Adds a marker with the information received from AJAX and Yelp API
@@ -165,13 +171,6 @@ function addMarker(location, name, review, link, id, map) {
     markerList.push(marker);
 
 
-}
-// Adds a marker to the map.
-
-//onclick from HTML id function that opens and closes windows
-function openWindows(id) {
-    infowindow.setContent(markerList[id].content);
-    infowindow.open(map, markerList[id]);
 }
 
 
@@ -287,9 +286,7 @@ var Authenticate = function() {
 };
 
 
-//global for access from different areas.
-var coffeeShops = ko.observableArray();
-var backup = [];
+
 
 //viewModel that updates the screen markers as well as list view.
 $(document).ready(function() {
